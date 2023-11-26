@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  cuda:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+      - USERNAME=$USER
+      - UID=$UID
+      - GID=$GROUPS
+    volumes:
+      - .:/code:cached
+      - ${DATASET_DIR}:/dataset
+    env_file:
+      - .env
+    hostname: cuda
+    tty: true
+    shm_size: 64gb
+    command: sleep infinity

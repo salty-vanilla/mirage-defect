@@ -1,0 +1,24 @@
+{
+    "name": "Cuda",
+    "dockerComposeFile": [
+      "./docker-compose.yml"
+    ],
+    "service": "cuda",
+    "workspaceFolder": "/code/",
+    "shutdownAction": "none",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "eamodio.gitlens",
+          "shardulm94.trailing-spaces",
+          "EditorConfig.EditorConfig",
+          "mhutchie.git-graph",
+          "vscode-icons-team.vscode-icons",
+          "ms-python.python",
+          "ms-python.vscode-pylance",
+          "ms-python.black-formatter",
+          "ms-python.isort"
+        ]
+      }
+    }
+  }
