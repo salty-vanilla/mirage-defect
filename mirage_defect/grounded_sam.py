@@ -1,4 +1,5 @@
 import os
+from typing import Union
 import urllib.request
 from PIL import Image
 import numpy as np
@@ -34,7 +35,8 @@ class GroundedSAM(object):
         caption: str,
         box_threshold: float = 0.3,
         text_threshold: float = 0.25,
-    ):
+        is_return_full: bool = False,
+    ) -> Union[tuple[np.ndarray, np.ndarray, list[str], np.ndarray], np.ndarray]:
         image_np, image_tensor = self._preprocess(image)
         image_tensor.to(self.device)
         boxes, logits, phrases = self._get_groundind_dino_output(image_tensor, caption, box_threshold, text_threshold)
@@ -48,7 +50,10 @@ class GroundedSAM(object):
 
         masks = self._get_sam_output(image_np, boxes)
 
-        return boxes.cpu().numpy(), logits.cpu().numpy(), phrases, masks.cpu().numpy().transpose(1, 0, 2, 3)[0]
+        if is_return_full:
+            return boxes.cpu().numpy(), logits.cpu().numpy(), phrases, masks.cpu().numpy().transpose(1, 0, 2, 3)[0]
+        else:
+            return masks.cpu().numpy().transpose(1, 0, 2, 3)[0]
 
     def _get_groundind_dino_output(self, image, caption, box_threshold, text_threshold):
         caption = caption.lower()

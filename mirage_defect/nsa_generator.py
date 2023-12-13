@@ -1,11 +1,12 @@
 # This code is a modification of the code found at the following GitHub repository:
 # https://github.com/hmsch/natural-synthetic-anomalies/blob/main/self_sup_data/self_sup_tasks.py
-from typing import NamedTuple, Optional, TypedDict
+from typing import NamedTuple, Optional, TypedDict, Union
 import cv2
 import numpy as np
 from PIL import Image
 from mirage_defect.logger import logger
 from mirage_defect.grounded_sam import GroundedSAM
+from mirage_defect.mask_generator import MaskGenerator
 
 
 MAX_ATTEMPTS = 200
@@ -35,45 +36,51 @@ class NsaGeneratorArgs(NamedTuple):
 
 
 class NsaGenerator(object):
-    def __init__(self, args: NsaGeneratorArgs) -> None:
+    def __init__(self, args: NsaGeneratorArgs, mask_generator: MaskGenerator) -> None:
         self.args = args
-        self.mask_generator = GroundedSAM()
+        self.mask_generator = mask_generator
 
     def set_random_args(self):
         self.args = NsaGeneratorArgs()
 
-    def generate(self, x1: Image.Image, x2: Optional[Image.Image] = None, caption: str = ""):
+    def generate(self, x1: Image.Image, x2: Optional[Image.Image] = None, caption: str = "", n: int = 1):
+        output_images = []
+        output_masks = []
         if x2 is None:
             x2 = x1.copy()
 
-        _, _, _, x1_object_mask = self.mask_generator.predict(x1, caption)
-        _, _, _, x2_object_mask = self.mask_generator.predict(x2, caption)
+        x1_object_mask = self.mask_generator.predict(x1, caption)
+        x2_object_mask = self.mask_generator.predict(x2, caption)
 
         x1_np = np.asarray(x1)
         x2_np = np.asarray(x2)
 
-        # (N_MASKS, H, W) -> (H, W)
-        x1_object_mask = np.sum(x1_object_mask, axis=0).astype(dtype=np.uint8)
-        x2_object_mask = np.sum(x2_object_mask, axis=0).astype(dtype=np.uint8)
+        # # (N_MASKS, H, W) -> (H, W)
+        # x1_object_mask = np.sum(x1_object_mask, axis=0).astype(dtype=np.uint8)
+        # x2_object_mask = np.sum(x2_object_mask, axis=0).astype(dtype=np.uint8)
 
+        x1_object_mask = cv2.resize(x1_object_mask, (x1_np.shape[1], x1_np.shape[0]))
         x2_np = cv2.resize(x2_np, (x1_np.shape[1], x1_np.shape[0]))
         x2_object_mask = cv2.resize(x2_object_mask, (x1_np.shape[1], x1_np.shape[0]))
 
-        image = np.asarray(x1.copy())
+        for _ in range(n):
+            image = np.asarray(x1.copy())
 
-        if self.args.label_mode == "continuous":
-            factor = np.random.uniform(0.05, 0.95)
-        else:
-            factor = 1
+            if self.args.label_mode == "continuous":
+                factor = np.random.uniform(0.05, 0.95)
+            else:
+                factor = 1
 
-        for i in range(self.args.num_patches):
-            if i == 0 or np.random.randint(2) > 0:  # at least one patch
-                image = self._update_image(image, x1_np, x2_np, x1_object_mask, x2_object_mask, factor)
+            for i in range(self.args.num_patches):
+                if i == 0 or np.random.randint(2) > 0:  # at least one patch
+                    image = self._update_image(image, x1_np, x2_np, x1_object_mask, x2_object_mask, factor)
 
-        mask = np.array(image - x1_np).sum(axis=-1).astype(dtype=bool).astype(dtype=np.uint8) * 255
-        Image.fromarray(image).save("debug/output.png")
-        Image.fromarray(mask).save("debug/mask.png")
-        return image, mask
+            mask = np.array(image - x1_np).sum(axis=-1).astype(dtype=bool).astype(dtype=np.uint8) * 255
+
+            output_images.append(image)
+            output_images.append(mask)
+
+        return output_images, output_masks
 
     def _update_image(
         self,
@@ -270,16 +277,11 @@ class NsaGenerator(object):
             patch_slice = (slice(ly, ry), slice(lx, rx))
 
             and_mask = x1_object_mask[patch_slice] & x2_object_mask & x2_patch_mask
-            Image.fromarray(x1_object_mask[patch_slice].astype(np.uint8) * 255).save("debug/x1_object_mask.png")
-            Image.fromarray(x2_object_mask.astype(np.uint8) * 255).save("debug/x2_object_mask.png")
-            Image.fromarray(x2_patch_mask.astype(np.uint8) * 255).save("debug/x2_patch_mask.png")
             # or_mask = (x1_object_mask[ly:ry, lx:rx] | x2_object_mask) & x2_patch_mask
             is_found = (
                 np.sum(x1_object_mask[patch_slice]) / (x2_patch_mask.shape[0] * x2_patch_mask.shape[1])
                 > self.args.object_overlap_threshold
             ) and (np.sum(and_mask) / np.sum(x1_object_mask[patch_slice]) > self.args.and_overlap_threshold)
-            print(np.sum(x1_object_mask[patch_slice]) / (x2_patch_mask.shape[0] * x2_patch_mask.shape[1]))
-            print(np.sum(and_mask) / np.sum(x1_object_mask[patch_slice]))
             n_attempts += 1
 
             if n_attempts > MAX_ATTEMPTS:
