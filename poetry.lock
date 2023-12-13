@@ -3287,31 +3287,6 @@ url = "https://download.pytorch.org/whl/cu118"
 reference = "torch_cu118"
 
 [[package]]
-name = "torchaudio"
-version = "2.0.2+cu118"
-description = "An audio package for PyTorch"
-optional = false
-python-versions = "*"
-files = [
-    {file = "torchaudio-2.0.2+cu118-cp310-cp310-linux_x86_64.whl", hash = "sha256:26692645ea061a005c57ec581a2d0425210ac6ba9f923edf11cc9b0ef3a111e9"},
-    {file = "torchaudio-2.0.2+cu118-cp310-cp310-win_amd64.whl", hash = "sha256:8ad0e93e39ce594a5cc53d46d972fde20b499e69d1e7f765adb33de13cfbab86"},
-    {file = "torchaudio-2.0.2+cu118-cp311-cp311-linux_x86_64.whl", hash = "sha256:7bc0b50a0d83a24bdc3916270c23934345ac84351df76bd3bb08834bdb271df6"},
-    {file = "torchaudio-2.0.2+cu118-cp311-cp311-win_amd64.whl", hash = "sha256:608af74eef9ea53f63673811e8eb5e9fc7d812e6122f498b301e2cc3f022349e"},
-    {file = "torchaudio-2.0.2+cu118-cp38-cp38-linux_x86_64.whl", hash = "sha256:954de78e4f066fe96fa6f418b5f1d7d58d1b0fbcf6a2d3730f041a2fd796f772"},
-    {file = "torchaudio-2.0.2+cu118-cp38-cp38-win_amd64.whl", hash = "sha256:97410a93d5eb81014cf3aa8c389a28e99c4b1b5d13b2838bffdac803eaed1ea5"},
-    {file = "torchaudio-2.0.2+cu118-cp39-cp39-linux_x86_64.whl", hash = "sha256:322c41c36e8e62fd37ab35114a67921ae542bcd940d583cd13e0e15141c848f9"},
-    {file = "torchaudio-2.0.2+cu118-cp39-cp39-win_amd64.whl", hash = "sha256:99595b4b239e5168131d8d016d55fde0b89fe7e0955649daf35f72fe1d3a79f7"},
-]
-
-[package.dependencies]
-torch = "2.0.1"
-
-[package.source]
-type = "legacy"
-url = "https://download.pytorch.org/whl/cu118"
-reference = "torch_cu118"
-
-[[package]]
 name = "torchvision"
 version = "0.15.2+cu118"
 description = "image and video datasets and models for torch deep learning"
@@ -3474,12 +3449,22 @@ python-versions = "*"
 files = [
     {file = "triton-2.0.0-1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:38806ee9663f4b0f7cd64790e96c579374089e58f49aac4a6608121aa55e2505"},
     {file = "triton-2.0.0-1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:226941c7b8595219ddef59a1fdb821e8c744289a132415ddd584facedeb475b1"},
+    {file = "triton-2.0.0-1-cp36-cp36m-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:4c9fc8c89874bc48eb7e7b2107a9b8d2c0bf139778637be5bfccb09191685cfd"},
+    {file = "triton-2.0.0-1-cp37-cp37m-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:d2684b6a60b9f174f447f36f933e9a45f31db96cb723723ecd2dcfd1c57b778b"},
     {file = "triton-2.0.0-1-cp38-cp38-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:9d4978298b74fcf59a75fe71e535c092b023088933b2f1df933ec32615e4beef"},
     {file = "triton-2.0.0-1-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:74f118c12b437fb2ca25e1a04759173b517582fcf4c7be11913316c764213656"},
+    {file = "triton-2.0.0-1-pp37-pypy37_pp73-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:9618815a8da1d9157514f08f855d9e9ff92e329cd81c0305003eb9ec25cc5add"},
+    {file = "triton-2.0.0-1-pp38-pypy38_pp73-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:1aca3303629cd3136375b82cb9921727f804e47ebee27b2677fef23005c3851a"},
+    {file = "triton-2.0.0-1-pp39-pypy39_pp73-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:e3e13aa8b527c9b642e3a9defcc0fbd8ffbe1c80d8ac8c15a01692478dc64d8a"},
     {file = "triton-2.0.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8f05a7e64e4ca0565535e3d5d3405d7e49f9d308505bb7773d21fb26a4c008c2"},
     {file = "triton-2.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bb4b99ca3c6844066e516658541d876c28a5f6e3a852286bbc97ad57134827fd"},
+    {file = "triton-2.0.0-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:47b4d70dc92fb40af553b4460492c31dc7d3a114a979ffb7a5cdedb7eb546c08"},
+    {file = "triton-2.0.0-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fedce6a381901b1547e0e7e1f2546e4f65dca6d91e2d8a7305a2d1f5551895be"},
     {file = "triton-2.0.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:75834f27926eab6c7f00ce73aaf1ab5bfb9bec6eb57ab7c0bfc0a23fac803b4c"},
     {file = "triton-2.0.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0117722f8c2b579cd429e0bee80f7731ae05f63fe8e9414acd9a679885fcbf42"},
+    {file = "triton-2.0.0-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bcd9be5d0c2e45d2b7e6ddc6da20112b6862d69741576f9c3dbaf941d745ecae"},
+    {file = "triton-2.0.0-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:42a0d2c3fc2eab4ba71384f2e785fbfd47aa41ae05fa58bf12cb31dcbd0aeceb"},
+    {file = "triton-2.0.0-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:52c47b72c72693198163ece9d90a721299e4fb3b8e24fd13141e384ad952724f"},
 ]
 
 [package.dependencies]
@@ -3491,11 +3476,6 @@ torch = "*"
 [package.extras]
 tests = ["autopep8", "flake8", "isort", "numpy", "pytest", "scipy (>=1.7.1)"]
 tutorials = ["matplotlib", "pandas", "tabulate"]
-
-[package.source]
-type = "legacy"
-url = "https://download.pytorch.org/whl/cu118"
-reference = "torch_cu118"
 
 [[package]]
 name = "types-python-dateutil"
@@ -3649,5 +3629,5 @@ all = ["torch"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.9.16"
-content-hash = "6bb317bd75ced07cb17906c66f8d87fec94af58f7a559713fb9e89dc21397e19"
+python-versions = "^3.9"
+content-hash = "7037fbfbf333f6b312554211992b0b80e93426820c6b112be2ff82cb43938bf3"

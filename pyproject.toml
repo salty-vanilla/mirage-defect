@@ -12,8 +12,6 @@ packages = [
 python = "^3.9"
 torch = {version = "^2.0.0", source = "torch_cu118"}
 torchvision = {version = "^0.15.0", source = "torch_cu118"}
-torchaudio = {version = "^2.0.0", source = "torch_cu118"}
-triton = {version = "^2.0.0", source = "torch_cu118"}
 segment-anything = { git = "https://github.com/salty-vanilla/segment-anything" }
 transformers = "^4.35.2"
 addict = "^2.4.0"
@@ -33,7 +31,7 @@ build-backend = "poetry.core.masonry.api"
 [[tool.poetry.source]]
 name = "torch_cu118"
 url = "https://download.pytorch.org/whl/cu118"
-priority = "explicit"
+priority = "supplemental"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.1"
